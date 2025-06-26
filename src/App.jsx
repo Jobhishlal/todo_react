@@ -1,22 +1,49 @@
 import React, { useState } from 'react'
 import TodoList from './assets/TodoList'
 
+
 function App() {
   const [tudu, settudu] = useState([]);
   const [input, setinput] = useState('');
   const [editId, seteditId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
+
   const addtudu = () => {
 
     const trimmedInput = input.trim()
-    if(!trimmedInput)return
+    if(!trimmedInput){
+      setErrorMessage('please enter valid todo')
+      setTimeout(()=>{
+        setErrorMessage('')
+      },1500)
+      return
+    }
+
+    
 
     const duplicate = tudu.some(item=>
       item.text.trim().toLowerCase()===trimmedInput.toLowerCase() && item.id!==editId
     )
+
+
+      const isValidInput = /^[A-Za-z0-9\s]{3,}$/.test(trimmedInput);
+
+      if(!isValidInput){
+        setErrorMessage('please enter valid number todo')
+
+        setTimeout(()=>{
+          setErrorMessage('')
+
+        },1500)
+        return
+      }
     if (duplicate) {
-   setErrorMessage('Todo already exists.');
+        setErrorMessage('Todo already exists.');
+      setTimeout(()=>{
+        setErrorMessage('')
+      },1500)
+  
    return
 
     }
@@ -63,9 +90,9 @@ function App() {
         body {
           font-family: 'JetBrains Mono', 'Courier New', monospace;
           background: #0a0a0a;
-          background-image: 
-            radial-gradient(circle at 25% 25%,rgb(35, 7, 216) 0%, transparent 50%),
-            radial-gradient(circle at 75% 75%,rgb(51, 0, 255) 0%, transparent 50%);
+          // background-image: 
+          //   radial-gradient(circle at 25% 25%,rgb(35, 7, 216) 0%, transparent 50%),
+          //   radial-gradient(circle at 75% 75%,rgb(51, 0, 255) 0%, transparent 50%);
           background-size: 800px 800px;
           background-position: 0 0, 400px 400px;
           min-height: 100vh;
@@ -83,23 +110,23 @@ function App() {
           margin: 0 auto;
           background: rgba(15, 15, 15, 0.95);
           backdrop-filter: blur(20px);
-          border: 1px solid #00ff41;
+          // border: 1px solid #00ff41;
           border-radius: 20px;
-          box-shadow: 
-            0 0 50px rgba(0, 255, 65, 0.3),
-            inset 0 1px 0 rgba(0, 255, 65, 0.1);
+          // box-shadow: 
+          //   0 0 50px rgba(0, 255, 65, 0.3),
+          //   inset 0 1px 0 rgba(0, 255, 65, 0.1);
           overflow: hidden;
           animation: glowPulse 3s ease-in-out infinite alternate;
         }
 
-        @keyframes glowPulse {
-          0% { box-shadow: 0 0 50px rgba(0, 255, 65, 0.3), inset 0 1px 0 rgba(0, 255, 65, 0.1); }
-          100% { box-shadow: 0 0 80px rgba(0, 255, 65, 0.5), inset 0 1px 0 rgba(0, 255, 65, 0.2); }
-        }
+        // @keyframes glowPulse {
+        //   0% { box-shadow: 0 0 50px rgba(0, 255, 65, 0.3), inset 0 1px 0 rgba(0, 255, 65, 0.1); }
+        //   100% { box-shadow: 0 0 80px rgba(0, 255, 65, 0.5), inset 0 1px 0 rgba(0, 255, 65, 0.2); }
+        // }
 
         .app-header {
           background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-          border-bottom: 2px solid #00ff41;
+          // border-bottom: 2px solid #00ff41;
           padding: 40px 30px;
           text-align: center;
           position: relative;
@@ -127,19 +154,19 @@ function App() {
           font-weight: 700;
           margin-bottom: 10px;
           color: #00ff41;
-          text-shadow: 
-            0 0 10px #00ff41,
-            0 0 20px #00ff41,
-            0 0 30px #00ff41;
+          // text-shadow: 
+          //   0 0 10px #00ff41,
+          //   0 0 20px #00ff41,
+          //   0 0 30px #00ff41;
           text-transform: uppercase;
           letter-spacing: 3px;
           animation: textGlow 2s ease-in-out infinite alternate;
         }
 
-        @keyframes textGlow {
-          0% { text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 30px #00ff41; }
-          100% { text-shadow: 0 0 20px #00ff41, 0 0 30px #00ff41, 0 0 40px #00ff41; }
-        }
+        // @keyframes textGlow {
+        //   0% { text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 30px #00ff41; }
+        //   100% { text-shadow: 0 0 20px #00ff41, 0 0 30px #00ff41, 0 0 40px #00ff41; }
+        // }
 
         .app-subtitle {
           font-size: 1.2rem;
@@ -526,7 +553,7 @@ function App() {
           <h1 className="app-title"> TODO HUB</h1>
           <p className="app-subtitle">High Performance Task Manager</p>
                 {errorMessage && (
-  <p style={{ color: 'red', marginTop: '5px' }}>{errorMessage}</p>
+            <p style={{ color: 'red', marginTop: '5px' }}>{errorMessage}</p>
 )}
           {totalCount > 0 && (
             <div className="stats">
